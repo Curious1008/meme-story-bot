@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+dist/
+build/
+data/meme_bot.db
+data/KILL
+.pytest_cache/
