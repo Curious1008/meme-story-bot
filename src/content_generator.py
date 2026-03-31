@@ -5,7 +5,7 @@ import logging
 
 import anthropic
 
-from src.config import ANTHROPIC_API_KEY, MAX_RETRIES
+from src.config import ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL, MAX_RETRIES
 from src.models import Trend, Round
 from src.safety import is_content_safe
 
@@ -26,7 +26,10 @@ SYSTEM_PROMPT = (
 
 def get_client() -> anthropic.Anthropic:
     """Create Anthropic client with API key from config."""
-    return anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    kwargs = {"api_key": ANTHROPIC_API_KEY}
+    if ANTHROPIC_BASE_URL:
+        kwargs["base_url"] = ANTHROPIC_BASE_URL
+    return anthropic.Anthropic(**kwargs)
 
 
 def _call_claude(client: anthropic.Anthropic, user_prompt: str) -> dict:

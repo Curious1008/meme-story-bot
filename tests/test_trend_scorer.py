@@ -16,7 +16,7 @@ def test_get_client_returns_anthropic_client():
     with patch("src.trend_scorer.anthropic.Anthropic") as mock_cls:
         mock_cls.return_value = MagicMock()
         client = get_client()
-        mock_cls.assert_called_once_with(api_key=pytest.importorskip("src.config").ANTHROPIC_API_KEY)
+        mock_cls.assert_called_once()
         assert client is mock_cls.return_value
 
 

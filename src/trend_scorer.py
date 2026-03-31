@@ -5,7 +5,7 @@ import logging
 
 import anthropic
 
-from src.config import ANTHROPIC_API_KEY
+from src.config import ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL
 from src.models import Trend
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,10 @@ SCORE_PROMPT = (
 
 def get_client() -> anthropic.Anthropic:
     """Create Anthropic client with API key from config."""
-    return anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    kwargs = {"api_key": ANTHROPIC_API_KEY}
+    if ANTHROPIC_BASE_URL:
+        kwargs["base_url"] = ANTHROPIC_BASE_URL
+    return anthropic.Anthropic(**kwargs)
 
 
 def score_trends(trends: list[Trend], min_score: float = 5.0) -> list[Trend]:

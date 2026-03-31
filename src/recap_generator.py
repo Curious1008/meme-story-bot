@@ -7,7 +7,7 @@ from typing import Optional
 
 import anthropic
 
-from src.config import ANTHROPIC_API_KEY
+from src.config import ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL
 from src.models import Episode
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,10 @@ RECAP_SYSTEM = (
 
 def get_client() -> anthropic.Anthropic:
     """Create Anthropic client with API key from config."""
-    return anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    kwargs = {"api_key": ANTHROPIC_API_KEY}
+    if ANTHROPIC_BASE_URL:
+        kwargs["base_url"] = ANTHROPIC_BASE_URL
+    return anthropic.Anthropic(**kwargs)
 
 
 def generate_daily_recap(episodes: list[Episode]) -> Optional[str]:
