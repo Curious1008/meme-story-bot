@@ -49,4 +49,5 @@ class Episode:
     state: EpisodeState
     rounds: list[Round] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = None
     contributors: list[str] = field(default_factory=list)
